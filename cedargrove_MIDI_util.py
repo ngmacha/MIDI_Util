@@ -41,7 +41,7 @@ Implementation Notes
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/CedarGroveStudios/MIDI_Util.git"
 
-import math  # required for freq_note helper
+from math import log  # required for freq_note helper
 
 # list of valid note names used by note_lexo, note_name, and name_note helpers
 note_base = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
@@ -113,5 +113,5 @@ def freq_note(freq):
           the value of None is returned. Ref: MIDI Tuning Standard formula.
     """
     if (pow(2, (0 - 69) / 12) * 440) <= freq <= (pow(2, (127 - 69) / 12) * 440):
-        return int(69 + (12* math.log(freq / 440, 2)))
+        return int(69 + (12* log(freq / 440, 2)))
     else: return None  # frequency outside valid range

@@ -6,7 +6,7 @@ note = 61
 print('note_lexo helper', note, note_lexo(note))
 
 name = 'G#7'
-print('note_lexo helper', name, note_lexo(note))
+print('note_lexo helper', name, note_lexo(name))
 
 note = 61
 print('note_name helper', note, note_name(note))

@@ -1,5 +1,5 @@
 # KJW sniffer.py
-# 2019-06-14 Cedar Grove Studios
+# 2019-06-15 Cedar Grove Studios
 # based upon @kevinjwalter's midi library and examples
 #
 
@@ -28,7 +28,7 @@ UART = busio.UART(board.TX, board.RX, baudrate=31250, timeout=0.001)
 midi = adafruit_midi.MIDI(midi_in=UART, in_channel=0)
 # 0 is MIDI channel 1
 
-print("basic MIDI sniffer.py 2019-06-14 CedarGrove")
+print("basic MIDI sniffer.py 2019-06-15 CedarGrove")
 # Convert channel numbers at the presentation layer to the ones musicians use
 print("Input channel:", midi.in_channel + 1 )
 
@@ -57,7 +57,7 @@ while True:
             print("     press %03d     chan #%02d" %(msg.pressure, msg.channel + 1))
 
         elif isinstance(msg, ControlChange):
-            print("ControlChange: ctrl #%03d" % msg.control)
+            print("ControlChange: ctrl #%03d  %s" % (msg.control, cc_decoder(msg.control)))
             print("     value %03d     chan #%02d" %(msg.value, msg.channel + 1))
 
         elif isinstance(msg, PitchBend):

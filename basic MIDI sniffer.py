@@ -49,7 +49,8 @@ while True:
             print("     vel   %03d     chan #%02d" %(msg.velocity, msg.channel + 1))
 
         elif isinstance(msg, TimingClock):
-            print("-- Tick: %03.1f BPM" % (1/((time.monotonic()-t0)*24)*60))  # compared to previous tick
+            t1 = time.monotonic()
+            if t1 != t0: print("-- Tick: %03.1f BPM" % (1/((t1-t0)*24)*60))  # compared to previous tick
             t0 = time.monotonic()
 
         elif isinstance(msg, ChannelPressure):

@@ -1,4 +1,4 @@
-# KJW sniffer.py
+# basic MIDI sniffer.py
 # 2019-06-15 Cedar Grove Studios
 # based upon @kevinjwalter's midi library and examples
 #
@@ -32,7 +32,7 @@ print("basic MIDI sniffer.py 2019-06-15 CedarGrove")
 # Convert channel numbers at the presentation layer to the ones musicians use
 print("Input channel:", midi.in_channel + 1 )
 
-t0 = time.monotonic()
+t0 = time.monotonic_ns()
 
 while True:
 
@@ -49,9 +49,9 @@ while True:
             print("     vel   %03d     chan #%02d" %(msg.velocity, msg.channel + 1))
 
         elif isinstance(msg, TimingClock):
-            t1 = time.monotonic()
-            if (t1-t0) != 0: print("-- Tick: %03.1f BPM" % (1/((t1-t0)*24)*60))  # compared to previous tick
-            t0 = time.monotonic()
+            t1 = time.monotonic_ns()
+            if (t1-t0) != 0: print("-- Tick: %03.1f BPM" % (1/((t1-t0)*24)*60*1e9))  # compared to previous tick
+            t0 = time.monotonic_ns()
 
         elif isinstance(msg, ChannelPressure):
             print("ChannelPressure: ")

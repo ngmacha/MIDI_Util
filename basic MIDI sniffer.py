@@ -50,7 +50,7 @@ while True:
 
         elif isinstance(msg, TimingClock):
             t1 = time.monotonic()
-            if t1 != t0: print("-- Tick: %03.1f BPM" % (1/((t1-t0)*24)*60))  # compared to previous tick
+            if (((t1-t0)*24)*60) != 0: print("-- Tick: %03.1f BPM" % (1/((t1-t0)*24)*60))  # compared to previous tick
             t0 = time.monotonic()
 
         elif isinstance(msg, ChannelPressure):

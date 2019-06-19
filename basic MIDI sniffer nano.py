@@ -1,6 +1,6 @@
 # basic MIDI sniffer.py
-# 2019-06-15 Cedar Grove Studios
-# based upon @kevinjwalter's midi library and examples
+# 2019-06-18 Cedar Grove Studios
+# based upon @kevinjwalter's adafruit_midi library and examples
 #
 
 import time
@@ -28,7 +28,7 @@ UART = busio.UART(board.TX, board.RX, baudrate=31250, timeout=0.001)
 midi = adafruit_midi.MIDI(midi_in=UART, in_channel=0)
 # 0 is MIDI channel 1
 
-print("basic MIDI sniffer.py 2019-06-15 CedarGrove")
+print("basic MIDI sniffer.py 2019-06-18 CedarGrove")
 # Convert channel numbers at the presentation layer to the ones musicians use
 print("Input channel:", midi.in_channel + 1 )
 
@@ -50,7 +50,8 @@ while True:
 
         elif isinstance(msg, TimingClock):
             t1 = time.monotonic_ns()
-            if (t1-t0) != 0: print("-- Tick: %03.1f BPM" % (1/((t1-t0)*24)*60*1e9))  # compared to previous tick
+            tempo = 1 / ((t1 - t0) * 24) * 60 * 1e9
+            if (t1-t0) != 0: print("-- Tick: %03.1f BPM" % tempo)  # compared to previous tick
             t0 = time.monotonic_ns()
 
         elif isinstance(msg, ChannelPressure):
@@ -74,13 +75,12 @@ while True:
             print("ProgramChange:")
             print("     patch %03d     chan #%02d" %(msg.patch, msg.channel + 1))
 
-        elif isinstance(msg, Start): print("-- Start --")
-
-        elif isinstance(msg, Stop): print("-- Stop --")
+        elif isinstance(msg, (Start, Stop)): print("-- %s --" % str(type(msg))[8:-2])
 
         elif isinstance(msg, SystemExclusive):
             print("SystemExclusive:  ID= ", msg.manufacturer_id,
                   ", data= ", msg.data)
+            print("--------------------")
 
         elif isinstance(msg, MIDIUnknownEvent):
             # Message are only known if they are imported
